@@ -1,0 +1,50 @@
+//comment
+/*
+    Multiline Comment
+*/
+
+
+//keywords
+import
+struct
+pub
+mut
+for
+if
+else
+return
+break
+continue
+switch
+case
+extern
+enum
+
+//types
+i<integer> //signed integer type
+u<integer> //unsigned integer type
+f<integer> //float types
+bool //bool
+void //void
+
+//signs
+(
+)
+{
+}
+[
+]
+,
+;
+:
+<
+>
+.
++
+-
+/
+*
+^
+&
+%
+=

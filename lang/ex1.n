@@ -1,0 +1,56 @@
+import "std.io";
+import "std.mem";
+
+vector_2d: struct {
+    x: mut f32,
+    y: mut f32
+}
+
+vector_2d.init: pub (self: mut &vector_2d, x: i32, y: i32) -> void {
+    self.x = x;
+    self.y = y;
+}
+
+node: struct<T> {
+    pub item: T,
+    pub next: mut &list
+}
+
+list: struct<T> {
+    root: mut &node<T>,
+    size: mut u64
+}
+
+list.new: pub <T>() -> list<T> {
+    return list<T>{null, 0};
+}
+
+list.insert: pub <T>(self: &mut list<T>, item: T) -> void {
+    n: mem.alloc<node<T>>(1);
+    *n = node<T>{item, root};
+    self.root = n;
+    self.size++;
+}
+
+list.free: pub <T>(self: &mut list<T>) -> void {
+    n: self.root;
+    for n != null {
+        self.root = self.root.next;
+        mem.free<node<T>>(n);
+        n = self.root;
+    }
+
+    self.size = 0;
+}
+
+main: () -> i32 {
+    v1: vector_2d;
+    v1.init(2.8, 3.6);
+
+    l: list.init();
+    defer l.free();
+
+    x: mut i8{ 45 };
+    x = 56;
+    return 0;
+}

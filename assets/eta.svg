@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="90" fill="#2D3748" />
+  
+  <!-- Eta symbol -->
+  <path d="M85 50 
+           L85 150
+           M85 100
+           L115 100
+           L115 150" 
+        stroke="#61DAFB" 
+        stroke-width="12" 
+        fill="none" 
+        stroke-linecap="round"
+        stroke-linejoin="round" />
+  
+  <!-- Accent dot -->
+  <circle cx="115" cy="70" r="8" fill="#61DAFB" />
+</svg>

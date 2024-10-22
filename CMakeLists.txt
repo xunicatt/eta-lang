@@ -1,0 +1,12 @@
+cmake_minimum_required(VERSION 3.10)
+
+project(eta VERSION 0.1)
+set(PROJECT_SOURCE_DIR src)
+add_executable(eta ${PROJECT_SOURCE_DIR}/eta.cpp)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_EXPORT_COMPILE_COMMANDS True)
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wall -pedantic")
+add_subdirectory(${PROJECT_SOURCE_DIR}/lib)
+target_include_directories(leta PRIVATE ${PROJECT_SOURCE_DIR}/include)
+target_link_libraries(eta PRIVATE leta)
