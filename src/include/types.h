@@ -1,5 +1,5 @@
-#ifndef __GRIT_LANG_TYPES_H
-#define __GRIT_LANG_TYPES_H
+#ifndef __ETA_LANG_TYPES_H
+#define __ETA_LANG_TYPES_H
 
 #include <cstddef>
 
@@ -8,7 +8,9 @@ struct Position {
   size_t row;
   size_t linebeg;
 
-  Position() { cursor = row = linebeg = 0; }
+  Position() {
+    cursor = row = linebeg = 0;
+  }
 };
 
 #endif

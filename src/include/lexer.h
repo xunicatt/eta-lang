@@ -1,11 +1,11 @@
-#ifndef __GRIT_LANG_LEXER_H
-#define __GRIT_LANG_LEXER_H
+#ifndef __ETA_LANG_LEXER_H
+#define __ETA_LANG_LEXER_H
 
-#include "tokens.h"
-#include "types.h"
 #include <cstdint>
 #include <string>
 #include <variant>
+#include "tokens.h"
+#include "types.h"
 
 class Lexer {
 public:
@@ -19,6 +19,8 @@ public:
   auto token() -> Token;
   auto getlastposition() const -> Position;
   auto getlasttoken() const -> Token;
+  auto getvalue() const -> const std::variant<std::string, uint8_t> &;
+  auto getln() const -> std::string;
 
 private:
   auto _token() -> Token;

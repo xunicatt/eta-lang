@@ -1,13 +1,14 @@
-#include "lexer.h"
+#include <lexer.h>
 #include <sys/types.h>
+#include <tokens.h>
+#include <types.h>
 #include <cctype>
 #include <cstddef>
 #include <cstdint>
 #include <cstdlib>
 #include <map>
+#include <string>
 #include <string_view>
-#include "tokens.h"
-#include "types.h"
 
 static const std::map<std::string_view, Token> Keywords = {
   {"import",   TIMPORT  },
@@ -49,7 +50,7 @@ static const std::map<char, Token> SpecialChars = {
   {'=', TEQL      },
 };
 
-Lexer::Lexer(const std::string &data) : data(data) {
+Lexer::Lexer(const std::string& data) : data(data) {
 }
 
 auto Lexer::currentchar() const -> char {
@@ -136,4 +137,13 @@ auto Lexer::_token() -> Token {
 
 auto Lexer::token() -> Token {
   return lasttoken = _token();
+}
+
+auto Lexer::getvalue() const -> const std::variant<std::string, uint8_t>& {
+  return value;
+}
+
+auto Lexer::getln() const -> std::string {
+  const size_t lnend = data.find('\n', lastposition.cursor);
+  return data.substr(lastposition.linebeg, lastposition.linebeg - lnend);
 }

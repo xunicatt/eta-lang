@@ -27,5 +27,6 @@ auto main() -> int32_t {
       std::cout << "got token: " << TokenNames[l.getlasttoken()] << std::endl;
     }
   }
+
   return 0;
 }
