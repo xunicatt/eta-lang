@@ -10,10 +10,9 @@
 #include <string>
 #include <string_view>
 
-static const std::map<std::string_view, Token> Keywords = {
+static const std::map<const std::string_view, const Token> Keywords = {
   {"import",   TIMPORT  },
   {"struct",   TSTRUCT  },
-  {"pub",      TPUB     },
   {"mut",      TMUT     },
   {"for",      TFOR     },
   {"if",       TIF      },
@@ -25,9 +24,11 @@ static const std::map<std::string_view, Token> Keywords = {
   {"case",     TCASE    },
   {"extern",   TEXTERN  },
   {"enum",     TENUM    },
+  {"defer",    TDEFER   },
+  {"fn",       TFUNC    },
 };
 
-static const std::map<char, Token> SpecialChars = {
+static const std::map<const char, const Token> SpecialChars = {
   {'(', TOPAREN   },
   {')', TCPAREN   },
   {'{', TOCURLY   },
@@ -50,7 +51,8 @@ static const std::map<char, Token> SpecialChars = {
   {'=', TEQL      },
 };
 
-Lexer::Lexer(const std::string& data) : data(data) {
+Lexer::Lexer(const std::string& filename, const std::string& data) :
+    data(data), filename(filename) {
 }
 
 auto Lexer::currentchar() const -> char {
@@ -71,7 +73,8 @@ auto Lexer::forwardcursor() -> void {
 }
 
 auto Lexer::pinposition() -> void {
-  lastposition = position;
+  lasttokenposition = lastposition;
+  lastposition      = position;
 }
 
 auto Lexer::trim() -> void {
@@ -90,7 +93,7 @@ auto Lexer::end() const -> bool {
   return position.cursor >= data.length();
 }
 auto Lexer::getlastposition() const -> Position {
-  return lastposition;
+  return lasttokenposition;
 }
 auto Lexer::getlasttoken() const -> Token {
   return lasttoken;
@@ -145,5 +148,13 @@ auto Lexer::getvalue() const -> const std::variant<std::string, uint8_t>& {
 
 auto Lexer::getln() const -> std::string {
   const size_t lnend = data.find('\n', lastposition.cursor);
-  return data.substr(lastposition.linebeg, lastposition.linebeg - lnend);
+  return data.substr(lastposition.linebeg, lnend - lastposition.linebeg);
+}
+
+auto Lexer::getposition() const -> Position {
+  return lastposition;
+}
+
+auto Lexer::getfilename() const -> std::string {
+  return filename;
 }

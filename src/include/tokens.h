@@ -7,7 +7,6 @@ enum Token : uint8_t {
   // KEYWORDS
   TIMPORT,
   TSTRUCT,
-  TPUB,
   TMUT,
   TFOR,
   TIF,
@@ -19,6 +18,8 @@ enum Token : uint8_t {
   TCASE,
   TEXTERN,
   TENUM,
+  TDEFER,
+  TFUNC,
 
   TDIGIT,
 
@@ -55,7 +56,6 @@ enum Token : uint8_t {
 const char *const TokenNames[__TCOUNT__] = {
   "import",
   "struct",
-  "pub",
   "mut",
   "for",
   "if",
@@ -67,6 +67,8 @@ const char *const TokenNames[__TCOUNT__] = {
   "case",
   "extern",
   "enum",
+  "defer",
+  "function",
 
   "digit",
 

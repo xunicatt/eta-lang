@@ -1,0 +1,11 @@
+fn fib(x: u32): u64 {
+    if(x < 3) {
+        return 1;
+    } else {
+        return fib(x - 1) + fib(x - 2);
+    }
+}
+
+fn main(): i32 {
+    fib(40);
+}

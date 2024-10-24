@@ -1,10 +1,14 @@
 #include <ast.h>
 
-Number::Number(NumberVariant value, NumberType type, NumberWidth width) :
-    value(value), type(type), width(width) {
+Number::Number(const NumberVariant value, const NumberType type) :
+    value(value), type(type) {
 }
 
-Variable::Variable(const std::string& name) : name(name) {
+Variable::Variable(
+  const std::string& name, const VariableType type, const VariableKind kind,
+  const std::string& customstruct
+) :
+    name(name), type(type), kind(kind), customstruct(customstruct) {
 }
 
 BinaryExpression::BinaryExpression(
@@ -14,13 +18,13 @@ BinaryExpression::BinaryExpression(
 }
 
 FunctionCall::FunctionCall(
-  const std::string& name, std::vector<ExpressionRef> args
+  const std::string& name, const std::vector<ExpressionRef>& args
 ) :
     name(name), args(std::move(args)) {
 }
 
 FunctionPrototype::FunctionPrototype(
-  const std::string& name, std::vector<ExpressionRef> args
+  const std::string& name, const std::vector<ExpressionRef>& args
 ) :
     name(name), args(std::move(args)) {
 }
@@ -29,6 +33,8 @@ auto FunctionPrototype::getname() const -> const std::string& {
   return name;
 }
 
-Function::Function(FunctionPrototypeRef prototype, ExpressionRef body) :
+Function::Function(
+  const FunctionPrototypeRef& prototype, const ExpressionRef& body
+) :
     prototype(std::move(prototype)), body(std::move(body)) {
 }

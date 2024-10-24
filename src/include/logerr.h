@@ -4,8 +4,9 @@
 #include <cstdio>
 #include <string>
 #include "ast.h"
+#include "lexer.h"
 
-auto logerr(const std::string& error) -> ExpressionRef;
-auto logerrp(const std::string& error) -> FunctionPrototypeRef;
+auto logerr(const Lexer& l, const std::string& error) -> ExpressionRef;
+auto logerrp(const Lexer& l, const std::string& error) -> FunctionPrototypeRef;
 
 #endif

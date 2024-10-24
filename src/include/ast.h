@@ -16,42 +16,61 @@ public:
 using ExpressionRef = std::unique_ptr<Expression>;
 
 enum NumberType : uint8_t {
-  UNSIGNED,
-  SIGNED,
-  FLOAT,
-  DOUBLE,
+  NTNEGINT,
+  NTPOSINT,
+  NTNEGFLT,
+  NTPOSFLT
 };
 
-enum NumberWidth : uint8_t {
-  S8,
-  S16,
-  S32,
-  S64
-};
-
-using NumberVariant = std::variant<int64_t, uint64_t, float, double>;
+using NumberVariant = std::variant<uint64_t, double>;
 
 class Number : public Expression {
 public:
-  Number(NumberVariant value, NumberType type, NumberWidth width);
+  Number(const NumberVariant value, const NumberType type);
 
 private:
-  NumberVariant value;
-  NumberType type;
-  NumberWidth width;
+  const NumberVariant value;
+  const NumberType type;
+};
+
+enum VariableType : uint8_t {
+  VTI8,
+  VTI16,
+  VTI32,
+  VTI64,
+  VTU8,
+  VTU16,
+  VTU32,
+  VTU64,
+  VTF32,
+  VTF64,
+  VTBOOL,
+  VTSTRING,
+  VTSTRUCT
+};
+
+enum VariableKind : uint8_t {
+  VKMUT,
+  VKCONST,
 };
 
 class Variable : public Expression {
 public:
-  Variable(const std::string& name);
+  Variable(
+    const std::string& name, const VariableType type, const VariableKind kind,
+    const std::string& customstruct = ""
+  );
 
 private:
   const std::string name;
+  const VariableType type;
+  const VariableKind kind;
+  const std::string& customstruct;
 };
 
 class BinaryExpression : public Expression {
 public:
-  BinaryExpression(Token op, ExpressionRef lhs, ExpressionRef rhs);
+  BinaryExpression(const Token op, ExpressionRef lhs, ExpressionRef rhs);
 
 private:
   ExpressionRef lhs;
@@ -61,32 +80,34 @@ private:
 
 class FunctionCall : public Expression {
 public:
-  FunctionCall(const std::string& name, std::vector<ExpressionRef> args);
+  FunctionCall(const std::string& name, const std::vector<ExpressionRef>& args);
 
 private:
-  std::string name;
-  std::vector<ExpressionRef> args;
+  const std::string& name;
+  const std::vector<ExpressionRef>& args;
 };
 
 class FunctionPrototype : public Expression {
 public:
-  FunctionPrototype(const std::string& name, std::vector<ExpressionRef> args);
+  FunctionPrototype(
+    const std::string& name, const std::vector<ExpressionRef>& args
+  );
   auto getname() const -> const std::string&;
 
 private:
-  std::string name;
-  std::vector<ExpressionRef> args;
+  const std::string& name;
+  const std::vector<ExpressionRef>& args;
 };
 
 using FunctionPrototypeRef = std::unique_ptr<FunctionPrototype>;
 
 class Function : public Expression {
 public:
-  Function(FunctionPrototypeRef prototype, ExpressionRef body);
+  Function(const FunctionPrototypeRef& prototype, const ExpressionRef& body);
 
 private:
-  FunctionPrototypeRef prototype;
-  ExpressionRef body;
+  const FunctionPrototypeRef& prototype;
+  const ExpressionRef& body;
 };
 
 #endif
